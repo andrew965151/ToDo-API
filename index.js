@@ -38,6 +38,10 @@ app.delete("/todos/:id", (req, res) => {
   res.json(deleted);
 });
 
-app.listen(PORT, () => {
-  console.log(`Todo API running on http://localhost:${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Todo API running on http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
