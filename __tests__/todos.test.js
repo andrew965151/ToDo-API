@@ -66,14 +66,14 @@ describe("POST /todos", () => {
     const res = await request(app).post("/todos").send();
 
     expect(res.status).toBe(400);
-    expect(res.body).toEqual({ error: "title is required" });
+    expect(res.body).toEqual({ error: "Request body must be a JSON object" });
   });
 
   it("should return 400 when title is an empty string", async () => {
     const res = await request(app).post("/todos").send({ title: "" });
 
     expect(res.status).toBe(400);
-    expect(res.body).toEqual({ error: "title is required" });
+    expect(res.body).toEqual({ error: "title must not be empty" });
   });
 
   it("should persist the todo so GET returns it", async () => {
@@ -160,8 +160,8 @@ describe("DELETE /todos/:id", () => {
 
   it("should handle non-numeric id parameter gracefully", async () => {
     const res = await request(app).delete("/todos/abc");
-    expect(res.status).toBe(404);
-    expect(res.body).toEqual({ error: "Todo not found" });
+    expect(res.status).toBe(400);
+    expect(res.body).toEqual({ error: "id must be a positive integer" });
   });
 });
 
